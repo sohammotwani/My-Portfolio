@@ -1,69 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdSense Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
 
-    <!-- Google AdSense -->
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9637882978043129"
-        crossorigin="anonymous">
-    </script>
+  <!-- Google AdSense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9637882978043129"
+    crossorigin="anonymous"></script>
 
-    <style>
-        body{
-            margin:0;
-            font-family:Arial, sans-serif;
-            background:#f5f5f5;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-        }
-
-        .box{
-            background:#fff;
-            padding:30px;
-            border-radius:12px;
-            box-shadow:0 0 10px rgba(0,0,0,.15);
-            text-align:center;
-            max-width:500px;
-        }
-
-        button{
-            margin-top:20px;
-            padding:10px 20px;
-            border:none;
-            background:#007bff;
-            color:#fff;
-            border-radius:6px;
-            cursor:pointer;
-        }
-    </style>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      text-align:center;
+      margin:40px;
+      background:#f5f5f5;
+    }
+    .container{
+      max-width:700px;
+      margin:auto;
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,.1);
+    }
+  </style>
 </head>
 <body>
 
-<div class="box">
-    <h2>Google AdSense Script Test</h2>
-    <p>If there are no console errors, the AdSense script is loading successfully.</p>
+<div class="container">
+  <h1>Welcome</h1>
+  <p>GitHub Pages + Google AdSense Test</p>
 
-    <button onclick="checkScript()">Check Script</button>
+  <!-- Replace data-ad-slot with your own Ad Unit ID -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9637882978043129"
+       data-ad-slot="8236998493"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
 
-    <p id="result"></p>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
 </div>
-
-<script>
-function checkScript(){
-    if(typeof window.adsbygoogle !== "undefined"){
-        document.getElementById("result").innerHTML =
-            "✅ Google AdSense script loaded successfully.";
-    }else{
-        document.getElementById("result").innerHTML =
-            "❌ Script not loaded yet or blocked.";
-    }
-}
-</script>
 
 </body>
 </html>
