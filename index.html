@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Countdown </title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: white;
+
+    background:
+        radial-gradient(circle at 20% 20%, #5b1b8a 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, #9b174f 0%, transparent 35%),
+        linear-gradient(135deg, #090014, #19002c);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 92%;
+    max-width: 750px;
+    text-align: center;
+}
+
+/* ---------- COUNTDOWN ---------- */
+
+#countdownScreen {
+    animation: fadeIn 1s ease;
+}
+
+.top-text {
+    font-size: 15px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: .7;
+}
+
+h1 {
+    margin: 15px 0 10px;
+
+    font-size: clamp(42px, 10vw, 80px);
+
+    background: linear-gradient(
+        90deg,
+        #ffd700,
+        #ff62b0,
+        #8cecff
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    color: rgba(255,255,255,.7);
+    margin-bottom: 40px;
+    font-size: 18px;
+}
+
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.time-box {
+    padding: 22px 10px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.3),
+        inset 0 0 20px rgba(255,255,255,.03);
+}
+
+.number {
+    font-size: clamp(32px, 7vw, 58px);
+    font-weight: bold;
+}
+
+.label {
+    margin-top: 5px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: .55;
+}
+
+/* ---------- BIRTHDAY ---------- */
+
+#birthdayScreen {
+    display: none;
+    animation: birthdayIn 1s ease;
+}
+
+.emoji {
+    font-size: 65px;
+    margin-bottom: 10px;
+}
+
+.birthday-title {
+    font-size: clamp(48px, 13vw, 100px);
+
+    line-height: .95;
+
+    background: linear-gradient(
+        90deg,
+        #ffd700,
+        #ff4fa3,
+        #00eaff,
+        #ffd700
+    );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation:
+        birthdayGlow 2s infinite alternate,
+        gradientMove 4s linear infinite;
+}
+
+.birthday-subtitle {
+    font-size: 21px;
+    margin-top: 20px;
+    opacity: .85;
+}
+
+/* ---------- GIFT ---------- */
+
+.gift-area {
+    margin-top: 45px;
+}
+
+.gift {
+    width: 170px;
+    height: 145px;
+
+    margin: auto;
+
+    position: relative;
+
+    cursor: pointer;
+
+    transition: transform .3s;
+}
+
+.gift:hover {
+    transform: scale(1.07);
+}
+
+.gift-box {
+    position: absolute;
+
+    bottom: 0;
+    left: 10px;
+
+    width: 150px;
+    height: 105px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e50046,
+            #ff3268,
+            #c7003d
+        );
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.35);
+}
+
+.gift-box::after {
+    content: "";
+
+    position: absolute;
+
+    left: 62px;
+    top: 0;
+
+    width: 26px;
+    height: 105px;
+
+    background: #ffd43b;
+}
+
+.lid {
+    position: absolute;
+
+    z-index: 3;
+
+    top: 20px;
+    left: 3px;
+
+    width: 164px;
+    height: 32px;
+
+    border-radius: 7px;
+
+    background: #ff4773;
+
+    transition:
+        transform .8s ease,
+        top .8s ease;
+}
+
+.lid::after {
+    content: "";
+
+    position: absolute;
+
+    left: 69px;
+
+    width: 26px;
+    height: 32px;
+
+    background: #ffd43b;
+}
+
+/* Ribbon */
+
+.ribbon-left,
+.ribbon-right {
+    position: absolute;
+
+    top: -25px;
+
+    width: 50px;
+    height: 38px;
+
+    border: 9px solid #ffd43b;
+
+    border-radius: 50%;
+}
+
+.ribbon-left {
+    left: 45px;
+    transform: rotate(25deg);
+}
+
+.ribbon-right {
+    right: 45px;
+    transform: rotate(-25deg);
+}
+
+/* Gift open */
+
+.gift.open .lid {
+    top: -65px;
+    transform: rotate(-7deg);
+}
+
+.gift.open {
+    animation: giftShake .5s;
+}
+
+/* ---------- BUTTON ---------- */
+
+.open-button {
+    margin-top: 25px;
+
+    border: none;
+
+    padding: 15px 32px;
+
+    border-radius: 50px;
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3975,
+            #8b4dff
+        );
+
+    box-shadow:
+        0 10px 30px rgba(255,60,150,.3);
+
+    transition: transform .2s;
+}
+
+.open-button:hover {
+    transform: scale(1.05);
+}
+
+.open-button:active {
+    transform: scale(.96);
+}
+
+/* ---------- MESSAGE ---------- */
+
+.message {
+    display: none;
+
+    margin: 30px auto 0;
+
+    max-width: 500px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.09);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    animation: fadeUp .8s ease;
+}
+
+.message h3 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.message p {
+    line-height: 1.6;
+    opacity: .85;
+}
+
+/* ---------- CONFETTI ---------- */
+
+.confetti {
+    position: fixed;
+
+    top: -20px;
+
+    width: 9px;
+    height: 15px;
+
+    z-index: 999;
+
+    animation: confettiFall linear forwards;
+}
+
+/* ---------- ANIMATIONS ---------- */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes birthdayIn {
+    from {
+        opacity: 0;
+        transform: scale(.6);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes birthdayGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(255,255,255,.2));
+    }
+
+    to {
+        filter: drop-shadow(0 0 25px rgba(255,100,200,.7));
+    }
+}
+
+@keyframes gradientMove {
+    from {
+        background-position: 0%;
+    }
+
+    to {
+        background-position: 300%;
+    }
+}
+
+@keyframes giftShake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    50% {
+        transform: translateX(8px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes confettiFall {
+    to {
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+    }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 500px) {
+
+    .countdown {
+        gap: 7px;
+    }
+
+    .time-box {
+        padding: 17px 5px;
+        border-radius: 15px;
+    }
+
+    .number {
+        font-size: 30px;
+    }
+
+    .label {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .birthday-subtitle {
+        font-size: 17px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- COUNTDOWN SCREEN -->
+
+    <div id="countdownScreen">
+
+        <div class="top-text">
+            Something Special Is Coming
+        </div>
+
+        <h1>Your Surprise is here</h1>
+
+        <div class="subtitle">
+            The countdown has begun...
+        </div>
+
+
+        <div class="countdown">
+
+            <div class="time-box">
+                <div class="number" id="days">00</div>
+                <div class="label">DAYS</div>
+            </div>
+
+            <div class="time-box">
+                <div class="number" id="hours">00</div>
+                <div class="label">HOURS</div>
+            </div>
+
+            <div class="time-box">
+                <div class="number" id="minutes">00</div>
+                <div class="label">MINUTES</div>
+            </div>
+
+            <div class="time-box">
+                <div class="number" id="seconds">00</div>
+                <div class="label">SECONDS</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BIRTHDAY SCREEN -->
+
+    <div id="birthdayScreen">
+
+        <div class="emoji">
+        </div>
+
+        <div class="birthday-title">
+            HAPPY<br>
+            BIRTHDAY!
+        </div>
+
+        <div class="birthday-subtitle">
+            Your special surprise is waiting... 
+        </div>
+
+
+        <!-- GIFT -->
+
+        <div class="gift-area">
+
+            <div class="gift" id="gift">
+
+                <div class="lid">
+
+                    <div class="ribbon-left"></div>
+                    <div class="ribbon-right"></div>
+
+                </div>
+
+                <div class="gift-box"></div>
+
+            </div>
+
+
+            <button
+                class="open-button"
+                id="openButton"
+                onclick="openGift()">
+
+                  Open Gift
+
+            </button>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="message"
+                id="message">
+
+                <h3>
+                     BMW Surprise!
+                </h3>
+
+                <p>
+                    Your surprise is being prepared...
+                    <br>
+                    Check your downloads! 
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   BIRTHDAY DATE
+   9 NOVEMBER 2026 - 12:00 AM
+   ========================================= */
+
+const birthdayDate =
+    new Date("November 9, 2026 00:00:00").getTime();
+
+
+/* =========================================
+   COUNTDOWN
+   ========================================= */
+
+const countdownTimer = setInterval(function() {
+
+    const now = new Date().getTime();
+
+    const distance = birthdayDate - now;
+
+
+    /* Birthday reached */
+
+    if (distance <= 0) {
+
+        clearInterval(countdownTimer);
+
+        document.getElementById(
+            "countdownScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "birthdayScreen"
+        ).style.display = "block";
+
+        createConfetti();
+
+        return;
+    }
+
+
+    /* Calculate time */
+
+    const days =
+        Math.floor(
+            distance /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (distance %
+            (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+
+    const minutes =
+        Math.floor(
+            (distance %
+            (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+
+    const seconds =
+        Math.floor(
+            (distance %
+            (1000 * 60)) /
+            1000
+        );
+
+
+    /* Show countdown */
+
+    document.getElementById("days").innerText =
+        String(days).padStart(2, "0");
+
+    document.getElementById("hours").innerText =
+        String(hours).padStart(2, "0");
+
+    document.getElementById("minutes").innerText =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("seconds").innerText =
+        String(seconds).padStart(2, "0");
+
+}, 1000);
+
+
+/* =========================================
+   OPEN GIFT + DOWNLOAD BMW VIDEO
+   ========================================= */
+
+function openGift() {
+
+    /* Open animation */
+
+    document
+        .getElementById("gift")
+        .classList
+        .add("open");
+
+
+    /* Hide button */
+
+    document
+        .getElementById("openButton")
+        .style.display = "none";
+
+
+    /* Confetti */
+
+    createConfetti();
+
+
+    /*
+       Wait for gift animation
+       and then download video
+    */
+
+    setTimeout(function() {
+
+        document
+            .getElementById("message")
+            .style.display = "block";
+
+
+        /*
+           BMW.mp4 must be in the
+           SAME folder as index.html
+        */
+
+        const videoLink =
+            document.createElement("a");
+
+
+        videoLink.href = "BMW.mp4";
+
+        videoLink.download = "BMW.mp4";
+
+
+        document.body.appendChild(videoLink);
+
+        videoLink.click();
+
+        document.body.removeChild(videoLink);
+
+    }, 800);
+
+}
+
+
+/* =========================================
+   CONFETTI
+   ========================================= */
+
+function createConfetti() {
+
+    for (
+        let i = 0;
+        i < 150;
+        i++
+    ) {
+
+        const confetti =
+            document.createElement("div");
+
+
+        confetti.className =
+            "confetti";
+
+
+        confetti.style.left =
+            Math.random() * 100 + "vw";
+
+
+        confetti.style.animationDuration =
+            (Math.random() * 3 + 2) + "s";
+
+
+        confetti.style.background =
+            "hsl(" +
+            Math.random() * 360 +
+            ", 90%, 60%)";
+
+
+        confetti.style.transform =
+            "rotate(" +
+            Math.random() * 360 +
+            "deg)";
+
+
+        document.body.appendChild(confetti);
+
+
+        setTimeout(function() {
+
+            confetti.remove();
+
+        }, 6000);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
