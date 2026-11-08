@@ -572,10 +572,14 @@ h1 {
 /* =========================================
    BIRTHDAY DATE
    9 NOVEMBER 2026 - 12:00 AM
+   India Standard Time
    ========================================= */
 
-const birthdayDate =
-    new Date("November 9, 2026 00:00:00").getTime();
+const birthdayDate = new Date(
+    "2026-11-09T00:00:00+05:30"
+).getTime();
+
+let countdownTimer = null;
 
 
 /* =========================================
@@ -584,13 +588,17 @@ const birthdayDate =
 
 function updateCountdown() {
 
-    const now = new Date().getTime();
+    const now = Date.now();
 
     const distance = birthdayDate - now;
 
+    // BIRTHDAY TIME REACHED
+
     if (distance <= 0) {
 
-        clearInterval(countdownTimer);
+        if (countdownTimer !== null) {
+            clearInterval(countdownTimer);
+        }
 
         document.getElementById(
             "countdownScreen"
@@ -604,6 +612,8 @@ function updateCountdown() {
 
         return;
     }
+
+    // CALCULATE TIME
 
     const days = Math.floor(
         distance / (1000 * 60 * 60 * 24)
@@ -623,6 +633,8 @@ function updateCountdown() {
         (distance % (1000 * 60)) / 1000
     );
 
+    // UPDATE SCREEN
+
     document.getElementById("days").innerText =
         String(days).padStart(2, "0");
 
@@ -637,12 +649,16 @@ function updateCountdown() {
 
 }
 
+// START TIMER AND CHECK IMMEDIATELY
+
 updateCountdown();
 
-const countdownTimer = setInterval(
-    updateCountdown,
-    1000
-);
+if (Date.now() < birthdayDate) {
+    countdownTimer = setInterval(
+        updateCountdown,
+        1000
+    );
+}
 
 
 /* =========================================
@@ -657,21 +673,30 @@ function openGift() {
 
     const message = document.getElementById("message");
 
+    // Prevent multiple clicks
+
+    if (button.style.display === "none") {
+        return;
+    }
+
     // Open gift animation
+
     gift.classList.add("open");
 
     // Hide button
+
     button.style.display = "none";
 
     // Confetti
+
     createConfetti();
 
     // Show birthday note
+
     setTimeout(function() {
 
         message.style.display = "block";
 
-        // Scroll to birthday note on mobile
         message.scrollIntoView({
             behavior: "smooth",
             block: "center"
