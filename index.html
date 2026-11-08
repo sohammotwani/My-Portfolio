@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Birthday Countdown </title>
+<title>Birthday Surprise</title>
 
 <style>
 * {
@@ -15,7 +16,7 @@
 
 body {
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: Arial, sans-serif;
     color: white;
 
@@ -27,6 +28,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 30px 0;
 }
 
 .container {
@@ -35,7 +37,7 @@ body {
     text-align: center;
 }
 
-/* ---------- COUNTDOWN ---------- */
+/* COUNTDOWN */
 
 #countdownScreen {
     animation: fadeIn 1s ease;
@@ -50,7 +52,6 @@ body {
 
 h1 {
     margin: 15px 0 10px;
-
     font-size: clamp(42px, 10vw, 80px);
 
     background: linear-gradient(
@@ -78,12 +79,9 @@ h1 {
 
 .time-box {
     padding: 22px 10px;
-
     border-radius: 22px;
-
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.15);
-
     backdrop-filter: blur(15px);
 
     box-shadow:
@@ -103,7 +101,7 @@ h1 {
     opacity: .55;
 }
 
-/* ---------- BIRTHDAY ---------- */
+/* BIRTHDAY */
 
 #birthdayScreen {
     display: none;
@@ -117,7 +115,6 @@ h1 {
 
 .birthday-title {
     font-size: clamp(48px, 13vw, 100px);
-
     line-height: .95;
 
     background: linear-gradient(
@@ -129,7 +126,6 @@ h1 {
     );
 
     background-size: 300%;
-
     -webkit-background-clip: text;
     color: transparent;
 
@@ -144,7 +140,7 @@ h1 {
     opacity: .85;
 }
 
-/* ---------- GIFT ---------- */
+/* GIFT */
 
 .gift-area {
     margin-top: 45px;
@@ -153,13 +149,9 @@ h1 {
 .gift {
     width: 170px;
     height: 145px;
-
     margin: auto;
-
     position: relative;
-
     cursor: pointer;
-
     transition: transform .3s;
 }
 
@@ -169,53 +161,40 @@ h1 {
 
 .gift-box {
     position: absolute;
-
     bottom: 0;
     left: 10px;
-
     width: 150px;
     height: 105px;
-
     border-radius: 8px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #e50046,
-            #ff3268,
-            #c7003d
-        );
+    background: linear-gradient(
+        90deg,
+        #e50046,
+        #ff3268,
+        #c7003d
+    );
 
     box-shadow: 0 15px 35px rgba(0,0,0,.35);
 }
 
 .gift-box::after {
     content: "";
-
     position: absolute;
-
     left: 62px;
     top: 0;
-
     width: 26px;
     height: 105px;
-
     background: #ffd43b;
 }
 
 .lid {
     position: absolute;
-
     z-index: 3;
-
     top: 20px;
     left: 3px;
-
     width: 164px;
     height: 32px;
-
     border-radius: 7px;
-
     background: #ff4773;
 
     transition:
@@ -225,30 +204,22 @@ h1 {
 
 .lid::after {
     content: "";
-
     position: absolute;
-
     left: 69px;
-
     width: 26px;
     height: 32px;
-
     background: #ffd43b;
 }
 
-/* Ribbon */
+/* RIBBON */
 
 .ribbon-left,
 .ribbon-right {
     position: absolute;
-
     top: -25px;
-
     width: 50px;
     height: 38px;
-
     border: 9px solid #ffd43b;
-
     border-radius: 50%;
 }
 
@@ -262,7 +233,7 @@ h1 {
     transform: rotate(-25deg);
 }
 
-/* Gift open */
+/* GIFT OPEN */
 
 .gift.open .lid {
     top: -65px;
@@ -273,34 +244,25 @@ h1 {
     animation: giftShake .5s;
 }
 
-/* ---------- BUTTON ---------- */
+/* BUTTON */
 
 .open-button {
     margin-top: 25px;
-
     border: none;
-
     padding: 15px 32px;
-
     border-radius: 50px;
-
     color: white;
-
     font-size: 17px;
     font-weight: bold;
-
     cursor: pointer;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ff3975,
-            #8b4dff
-        );
+    background: linear-gradient(
+        90deg,
+        #ff3975,
+        #8b4dff
+    );
 
-    box-shadow:
-        0 10px 30px rgba(255,60,150,.3);
-
+    box-shadow: 0 10px 30px rgba(255,60,150,.3);
     transition: transform .2s;
 }
 
@@ -312,59 +274,67 @@ h1 {
     transform: scale(.96);
 }
 
-/* ---------- MESSAGE ---------- */
+/* BIRTHDAY NOTE */
 
 .message {
     display: none;
-
     margin: 30px auto 0;
-
-    max-width: 500px;
-
-    padding: 25px;
-
-    border-radius: 20px;
+    max-width: 550px;
+    padding: 28px 24px;
+    border-radius: 22px;
+    text-align: left;
 
     background: rgba(255,255,255,.09);
-
     border: 1px solid rgba(255,255,255,.18);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
 
     animation: fadeUp .8s ease;
 }
 
 .message h3 {
     font-size: 30px;
-    margin-bottom: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #ffd700,
+        #ff62b0
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 .message p {
-    line-height: 1.6;
-    opacity: .85;
+    line-height: 1.8;
+    font-size: 15px;
+    color: rgba(255,255,255,.9);
 }
 
-/* ---------- CONFETTI ---------- */
+/* CONFETTI */
 
 .confetti {
     position: fixed;
-
     top: -20px;
-
     width: 9px;
     height: 15px;
-
     z-index: 999;
+    pointer-events: none;
 
     animation: confettiFall linear forwards;
 }
 
-/* ---------- ANIMATIONS ---------- */
+/* ANIMATIONS */
 
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: scale(.95);
     }
-
     to {
         opacity: 1;
         transform: scale(1);
@@ -376,7 +346,6 @@ h1 {
         opacity: 0;
         transform: scale(.6);
     }
-
     to {
         opacity: 1;
         transform: scale(1);
@@ -387,7 +356,6 @@ h1 {
     from {
         filter: drop-shadow(0 0 5px rgba(255,255,255,.2));
     }
-
     to {
         filter: drop-shadow(0 0 25px rgba(255,100,200,.7));
     }
@@ -397,32 +365,17 @@ h1 {
     from {
         background-position: 0%;
     }
-
     to {
         background-position: 300%;
     }
 }
 
 @keyframes giftShake {
-    0% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-8px);
-    }
-
-    50% {
-        transform: translateX(8px);
-    }
-
-    75% {
-        transform: translateX(-5px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
 @keyframes fadeUp {
@@ -430,7 +383,6 @@ h1 {
         opacity: 0;
         transform: translateY(30px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -439,13 +391,11 @@ h1 {
 
 @keyframes confettiFall {
     to {
-        transform:
-            translateY(110vh)
-            rotate(720deg);
+        transform: translateY(110vh) rotate(720deg);
     }
 }
 
-/* ---------- MOBILE ---------- */
+/* MOBILE */
 
 @media (max-width: 500px) {
 
@@ -470,10 +420,22 @@ h1 {
     .birthday-subtitle {
         font-size: 17px;
     }
+
+    .message {
+        padding: 22px 18px;
+    }
+
+    .message h3 {
+        font-size: 26px;
+    }
+
+    .message p {
+        font-size: 14px;
+    }
 }
+
 </style>
 </head>
-
 
 <body>
 
@@ -492,7 +454,6 @@ h1 {
         <div class="subtitle">
             The countdown has begun...
         </div>
-
 
         <div class="countdown">
 
@@ -525,8 +486,7 @@ h1 {
 
     <div id="birthdayScreen">
 
-        <div class="emoji">
-        </div>
+        <div class="emoji"></div>
 
         <div class="birthday-title">
             HAPPY<br>
@@ -534,7 +494,7 @@ h1 {
         </div>
 
         <div class="birthday-subtitle">
-            Your special surprise is waiting... 
+            Your special surprise is waiting...
         </div>
 
 
@@ -561,25 +521,41 @@ h1 {
                 id="openButton"
                 onclick="openGift()">
 
-                  Open Gift
+                Open Gift
 
             </button>
 
 
-            <!-- MESSAGE -->
+            <!-- BIRTHDAY NOTE -->
 
-            <div
-                class="message"
-                id="message">
+            <div class="message" id="message">
 
-                <h3>
-                     BMW Surprise!
-                </h3>
+                <h3>For My Bestie ❤️</h3>
 
                 <p>
-                    Your surprise is being prepared...
-                    <br>
-                    Check your downloads! 
+
+                    Happy Birthdayyy! 🎂❤️
+
+                    <br><br>
+
+                    I just want to say that you're genuinely one of the sweetest people I've met. I'm really glad to have you as my bestie. All our random talks, silly jokes, endless conversations and stupid moments make our friendship so special.
+
+                    <br><br>
+
+                    I hope this birthday brings you lots of happiness, success, love and everything you've ever wished for. May you achieve all your dreams and always keep that beautiful smile on your face.
+
+                    <br><br>
+
+                    Thank you for being such an amazing friend. Never change yourself for anyone, because you're special just the way you are.
+
+                    <br><br>
+
+                    And yes, no matter how much we fight, argue or annoy each other, you're still my favourite headache! 😂❤️
+
+                    <br><br>
+
+                    Once again, Happiest Birthday, Bestie! Stay blessed and keep shining!
+
                 </p>
 
             </div>
@@ -606,14 +582,11 @@ const birthdayDate =
    COUNTDOWN
    ========================================= */
 
-const countdownTimer = setInterval(function() {
+function updateCountdown() {
 
     const now = new Date().getTime();
 
     const distance = birthdayDate - now;
-
-
-    /* Birthday reached */
 
     if (distance <= 0) {
 
@@ -632,41 +605,23 @@ const countdownTimer = setInterval(function() {
         return;
     }
 
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
 
-    /* Calculate time */
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
+    );
 
-    const days =
-        Math.floor(
-            distance /
-            (1000 * 60 * 60 * 24)
-        );
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) /
+        (1000 * 60)
+    );
 
-
-    const hours =
-        Math.floor(
-            (distance %
-            (1000 * 60 * 60 * 24)) /
-            (1000 * 60 * 60)
-        );
-
-
-    const minutes =
-        Math.floor(
-            (distance %
-            (1000 * 60 * 60)) /
-            (1000 * 60)
-        );
-
-
-    const seconds =
-        Math.floor(
-            (distance %
-            (1000 * 60)) /
-            1000
-        );
-
-
-    /* Show countdown */
+    const seconds = Math.floor(
+        (distance % (1000 * 60)) / 1000
+    );
 
     document.getElementById("days").innerText =
         String(days).padStart(2, "0");
@@ -680,66 +635,47 @@ const countdownTimer = setInterval(function() {
     document.getElementById("seconds").innerText =
         String(seconds).padStart(2, "0");
 
-}, 1000);
+}
+
+updateCountdown();
+
+const countdownTimer = setInterval(
+    updateCountdown,
+    1000
+);
 
 
 /* =========================================
-   OPEN GIFT + DOWNLOAD BMW VIDEO
+   OPEN GIFT + SHOW BIRTHDAY NOTE
    ========================================= */
 
 function openGift() {
 
-    /* Open animation */
+    const gift = document.getElementById("gift");
 
-    document
-        .getElementById("gift")
-        .classList
-        .add("open");
+    const button = document.getElementById("openButton");
 
+    const message = document.getElementById("message");
 
-    /* Hide button */
+    // Open gift animation
+    gift.classList.add("open");
 
-    document
-        .getElementById("openButton")
-        .style.display = "none";
+    // Hide button
+    button.style.display = "none";
 
-
-    /* Confetti */
-
+    // Confetti
     createConfetti();
 
-
-    /*
-       Wait for gift animation
-       and then download video
-    */
-
+    // Show birthday note
     setTimeout(function() {
 
-        document
-            .getElementById("message")
-            .style.display = "block";
+        message.style.display = "block";
 
-
-        /*
-           BMW.mp4 must be in the
-           SAME folder as index.html
-        */
-
-        const videoLink =
-            document.createElement("a");
-
-
-        videoLink.href = "BMW.mp4";
-
-        videoLink.download = "BMW.mp4";
-
-
-        document.body.appendChild(videoLink);
-
-        videoLink.click();
-
-        document.body.removeChild(videoLink);
+        // Scroll to birthday note on mobile
+        message.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
 
     }, 800);
 
@@ -752,42 +688,29 @@ function openGift() {
 
 function createConfetti() {
 
-    for (
-        let i = 0;
-        i < 150;
-        i++
-    ) {
+    for (let i = 0; i < 150; i++) {
 
-        const confetti =
-            document.createElement("div");
+        const confetti = document.createElement("div");
 
-
-        confetti.className =
-            "confetti";
-
+        confetti.className = "confetti";
 
         confetti.style.left =
             Math.random() * 100 + "vw";
 
-
         confetti.style.animationDuration =
             (Math.random() * 3 + 2) + "s";
-
 
         confetti.style.background =
             "hsl(" +
             Math.random() * 360 +
             ", 90%, 60%)";
 
-
         confetti.style.transform =
             "rotate(" +
             Math.random() * 360 +
             "deg)";
 
-
         document.body.appendChild(confetti);
-
 
         setTimeout(function() {
 
